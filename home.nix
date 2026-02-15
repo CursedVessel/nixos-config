@@ -3,15 +3,14 @@
 {
   home.username = "cosmic";
   home.homeDirectory = "/home/cosmic";
-  home.stateVersion = "24.05"; 
+  home.stateVersion = "24.05";
 
-  # 1. Shell & Terminals (Zsh + Starship)
+  # 1. Shell & Terminals
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-
     shellAliases = {
       ll = "ls -l";
       update = "sudo nixos-rebuild switch --flake .";
@@ -21,7 +20,6 @@
       gc = "git commit -m";
       gp = "git push";
     };
-
     history = {
       size = 10000;
       path = "${config.xdg.dataHome}/zsh/history";
@@ -50,16 +48,22 @@
     };
   };
 
-  # 3. Development Tools
+  # 3. GitHub CLI (Replaces 'gh' package to fix auth)
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper.enable = true;
+  };
+
+  # 4. Development Tools
   home.packages = with pkgs; [
     # Rust
-    rustup       # Provides cargo, rustc, AND rust-analyzer shims.
-    gcc          # Linker needed for Rust
-    
+    rustup
+    gcc
+
     # Swift
     swift
     sourcekit-lsp
-    
+
     # Nix Tools
     nixd
     nil
@@ -71,6 +75,6 @@
     fzf
   ];
 
-  # 4. Wallpapers Symlink
+  # 5. Wallpapers Symlink
   home.file."Pictures/Wallpapers".source = ./Wallpapers;
 }

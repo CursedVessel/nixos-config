@@ -30,10 +30,13 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Desktop Environment
-  services.displayManager.cosmic-greeter.enable = true;
-  services.desktopManager.cosmic.enable = true;
-  services.xserver.enable = true;
+  # ---------------------------------------------------------
+  # Desktop Environment: KDE Plasma 6
+  # ---------------------------------------------------------
+  services.displayManager.sddm.enable = true; # Login Screen
+  services.desktopManager.plasma6.enable = true; # Desktop
+  services.xserver.enable = true; # X11/XWayland support
+  
   services.xserver.xkb = { layout = "us"; variant = ""; };
 
   # Audio & Printing
@@ -46,6 +49,9 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # Flatpak Disabled (As requested previously)
+  services.flatpak.enable = false;
 
   # Shell Configuration
   programs.zsh.enable = true;
@@ -67,7 +73,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 2d";
+    options = "--delete-older-than 5d";
   };
 
   # System Packages
@@ -81,8 +87,10 @@
     ookla-speedtest
     popsicle
     kdePackages.ark
+    
+    # Browsers & Editors
     firefox
-    zed-editor
+    kdePackages.kate  # <--- Replaces Zed
   ];
 
   programs.steam.enable = true;
